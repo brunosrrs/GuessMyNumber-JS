@@ -48,15 +48,17 @@ document.querySelector(".check").addEventListener("click", function () {
 
     //Quando erra pra +
   } else if (palpite !== secretNumber) {
-    displayMessage(
-      palpite > secretNumber ? " 📈 Muito alto" : "📉 Muito baixo"
-    );
-    score--;
-    displayScore(score);
-  } else {
-    displayMessage("💩 Você perdeu!");
-    displayScore(0);
-    displayBody("#e93838");
+    if (score > 1) {
+      displayMessage(
+        palpite > secretNumber ? " 📈 Muito alto" : "📉 Muito baixo"
+      );
+      score--;
+      displayScore(score);
+    } else {
+      displayMessage("💩 Você perdeu!");
+      displayScore(0);
+      displayBody("#e93838");
+    }
   }
 });
 
