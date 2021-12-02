@@ -9,6 +9,7 @@ document.querySelector(".number").textContent = 13; */
 
 //EVENTS
 
+//DRY CODE
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let recorde = 0;
@@ -26,27 +27,31 @@ const displayBody = function (body) {
 };
 
 //
-//click
+//click event
 document.querySelector(".check").addEventListener("click", function () {
   const palpite = Number(document.querySelector(".guess").value);
 
   console.log(palpite);
 
-  if (!palpite) {
-    displayMessage("⛔ Sem número ");
+  //inital condition
+  if (!palpite || palpite > 20 || palpite < 1) {
+    displayMessage("⛔ Digite um número válido ");
 
-    //Quando acerta o palpite
+    //when guess is right
   } else if (palpite === secretNumber) {
     displayMessage("🥳 Acertou");
     displayNumber(secretNumber);
     displayBody("#59da48");
+
+    //disable button
+    document.querySelector(".check").disabled = true;
 
     if (score > recorde) {
       recorde = score;
       document.querySelector(".highscore").textContent = recorde;
     }
 
-    //Quando erra pra +
+    //when guess is higher or lower
   } else if (palpite !== secretNumber) {
     if (score > 1) {
       displayMessage(
@@ -58,10 +63,12 @@ document.querySelector(".check").addEventListener("click", function () {
       displayMessage("💩 Você perdeu!");
       displayScore(0);
       displayBody("#e93838");
+      document.querySelector(".check").disabled = true;
     }
   }
 });
 
+// click event to again button
 document.querySelector(".again").addEventListener("click", function () {
   score = 20;
   secretNumber = Math.trunc(Math.random() * 20) + 1;
@@ -71,4 +78,5 @@ document.querySelector(".again").addEventListener("click", function () {
   document.querySelector(".guess").value = "";
   displayNumber("?");
   displayBody("#222");
+  document.querySelector(".check").disabled = false;
 });
